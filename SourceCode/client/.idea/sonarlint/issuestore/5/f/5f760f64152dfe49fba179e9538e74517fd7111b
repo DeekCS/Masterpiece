@@ -1,0 +1,24 @@
+
+\javascript:S1481"9Remove the declaration of the unused 'navigate' variable.(õÜ¢8®İûÕû/
+Yjavascript:S1854"6Remove this useless assignment to variable "navigate".(õÜ¢8¯İûÕû/
+^javascript:S1481"6Remove the declaration of the unused 'files' variable.(Ö‚Å¹şÿÿÿÿ8¯İûÕû/
+[javascript:S1854"3Remove this useless assignment to variable "files".(Ö‚Å¹şÿÿÿÿ8¯İûÕû/
+Ajavascript:S125"Remove this commented out code.(ŸªÒ8°İûÕû/
+Tjavascript:S1117<",'id' is already declared in the upper scope.(¿É¿¢üÿÿÿÿ8°İûÕû/
+[javascript:S1481G"9Remove the declaration of the unused 'playlist' variable.(êÚK8°İûÕû/
+Xjavascript:S1854G"6Remove this useless assignment to variable "playlist".(êÚK8±İûÕû/
+Wjavascript:S1481H"4Remove the declaration of the unused 'API' variable.(ôŒŸÕ8±İûÕû/
+Tjavascript:S1854H"1Remove this useless assignment to variable "API".(ôŒŸÕ8²İûÕû/
+ajavascript:S1481N"9Remove the declaration of the unused 'getFiles' variable.(˜”Ô¯ÿÿÿÿÿ8²İûÕû/
+^javascript:S1854N"6Remove this useless assignment to variable "getFiles".(˜”Ô¯ÿÿÿÿÿ8²İûÕû/
+Tjavascript:S1117N",'id' is already declared in the upper scope.(˜”Ô¯ÿÿÿÿÿ8²İûÕû/
+Fjavascript:S125X"Remove this commented out code.(ÇŠ•×øÿÿÿÿ8²İûÕû/
+bjavascript:S1481Z"?Remove the declaration of the unused 'handleDownload' variable.(‘ÖŠ¦8²İûÕû/
+_javascript:S1854Z"<Remove this useless assignment to variable "handleDownload".(‘ÖŠ¦8³İûÕû/
+hjavascript:S3358»"DExtract this nested ternary operation into an independent statement.(¸³»ò8³İûÕû/
+Gjavascript:S125¡"Remove this commented out code.(èî×Ñùÿÿÿÿ8³İûÕû/
+Gjavascript:S125Ã"Remove this commented out code.(èî×Ñùÿÿÿÿ8´İûÕû/
+hjavascript:S3358»"DExtract this nested ternary operation into an independent statement.(¸³»ò8´İûÕû/
+Gjavascript:S125Ú"Remove this commented out code.(èî×Ñùÿÿÿÿ8´İûÕû/
+Tsecrets:S6334%"/Make sure this Google API Key is not disclosed.(õÉéÀøÿÿÿÿ8†æûÕû/
+Osecrets:S6334H"/Make sure this Google API Key is not disclosed.(ôŒŸÕ8†æûÕû/

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import HeaderMob from "../../components/HeaderMob/HeaderMob";
-import Header from "../../components/Header/Header";
+import HeaderMob from "../../components/Dashboard/HeaderMob/HeaderMob";
+import Header from "../../components/Dashboard/Header/Header";
 import { useNavigate } from "react-router-dom";
 
 const Admin = () => {

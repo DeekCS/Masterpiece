@@ -1,0 +1,191 @@
+.course-filter-form {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-left: -5px;
+    margin-right: -5px;
+    margin-bottom: 15px;
+}
+
+.elementor *, .elementor :after, .elementor :before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.course-filter-form.search-cols-4>div {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 calc( 100%/4);
+    flex: 0 0 calc( 100%/4);
+    max-width: calc( 100%/4);
+}
+
+.course-filter-form>div {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 calc( 100%/3);
+    flex: 0 0 calc( 100%/3);
+    max-width: calc( 100%/3);
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-top: 0;
+    margin-bottom: 20px;
+}
+
+.course-filter_search .content-inner {
+    position: relative;
+}
+
+.course-filter_search .content-inner input {
+    width: 100%;
+    font-size: 14px;
+}
+
+input[type=text], input[type=tel], input[type=password], input[type=email], input[type=url], input[type=date], input[type=number], textarea, select {
+    background-color: #fff;
+    padding: 0 20px;
+    max-width: 100%;
+    line-height: 50px;
+    color: #757783;
+    font-size: 16px;
+    border: 1px solid rgba(0,0,0,.09);
+    -webkit-box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 9%);
+    box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 9%);
+    border-radius: 4px;
+}
+
+.course-filter_search .content-inner i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -10px;
+    z-index: 11;
+}
+
+.tutor-text-center {
+    text-align: center;
+}
+
+.tutor-p-32 {
+    padding: 32px !important;
+}
+
+.tutor-wrap {
+    color: #757783;
+}
+
+.tutor-font-family, .tutor-backend #wpbody-content, [class*='tutor-screen-'], .tutor-course-details-page, .tutor-course-single-content-wraper, .tutor-wrap {
+    font-family: 'Inter', sans-serif !important;
+    letter-spacing: -0.2px;
+}
+
+.tutor-color-black-60, .tutor-user-public-profile .tutor-user-profile-content p {
+    color: #5b616f;
+}
+
+.tutor-color-black-60, .tutor-user-public-profile .tutor-user-profile-content p {
+    color: #5b616f;
+}
+
+.tutor-text-center {
+    text-align: center;
+}
+
+.tutor-fs-1, .tutor-fs-2, .tutor-fs-3, .tutor-fs-4, .tutor-fs-5, .tutor-fs-6, .tutor-fs-7, .tutor-fs-8, .tutor-fs-9 {
+    line-height: 1.6;
+}
+
+.tutor-fw-normal {
+    font-weight: 400 !important;
+}
+
+.tutor-fs-6 {
+    font-size: 1rem !important;
+}
+
+
+.dropdown-css {
+    display: block;
+    width: 100%;
+    padding: 0.8rem 0.75rem !important;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    outline: 0;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+
+.pagination {
+    margin-top: 45px;
+    margin-left: -40px;
+    display: flex;
+    list-style: none;
+    outline: none;
+}
+
+.pagination>.active>a {
+    background-color: #47ccde;
+    color: #fff;
+}
+
+.pagination>li>a {
+    border: 1px solid #47ccde;
+    padding: 5px 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+.pagination>li>a, .pagination>li>span {
+    color: #47ccde;
+    background-color: azure;
+}
+
+.courses-one__single-img{
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+    width: 100%;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+}
+
+
+/*.select-filter-dropdow:after {*/
+/*    content: '';*/
+/*    width: 12px;*/
+/*    height: 12px;*/
+/*    background-image: url("https://gaviaspreview.com/wp/zilom/wp-content/themes/zilom/images/down-arrow.svg")!important;*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: center center;*/
+/*    background-size: 12px;*/
+/*    border: none;*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    right: 10px;*/
+/*    margin-top: -5px;*/
+/*    -webkit-transition: all .35s;*/
+/*    transition: all .35s;*/
+/*    z-index: 15;*/
+/*}*/
+
+/*.show-results:before {*/
+/*    content: '';*/
+/*    width: 80px;*/
+/*    height: 100%;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    right: 5px;*/
+/*    background: -webkit-gradient(linear,right top,left top,color-stop(10%,#fff),color-stop(100%,rgba(255,255,255,0)),to(rgba(255,255,255,0)));*/
+/*    background: linear-gradient(270deg,#fff 10%,rgba(255,255,255,0) 100%,rgba(255,255,255,0) 100%);*/
+/*    z-index: 11;*/
+/*}*/
+

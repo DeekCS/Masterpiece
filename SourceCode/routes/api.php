@@ -57,6 +57,18 @@ Route::controller(coursesController::class)->group(function(){
     Route::get('course/{id}' ,  'getCourseById');
     Route::delete('course/{id}' ,  'deleteCourse');
     Route::get('courses' , 'getCoursesNames');
+//    get image from public folder
+//    Route::get('course/image/{image}' ,  'getImage');
+//    uploadImage
+    Route::post('course/image' ,  'uploadImage');
+    //getCoursesByCategoryId route
+    Route::get('courses/category/{id}' ,  'getCoursesByCategoryId');
+//    searchCoursesByName
+    Route::get('search/{keyword}' ,  'searchCoursesByName');
+    //sortCoursesByYear($order)
+    Route::get('sort/{order}' ,  'sortCoursesByYear');
+    //getPaginatedCourses(Request $request)
+    Route::get('course/list/{page}' ,  'getPaginatedCourses');
 });
 
 //Posts
@@ -87,12 +99,17 @@ Route::controller(commentsController::class)->group(function(){
 // Resources
 Route::controller(resourcesController::class)->group(function(){
     // Route::get('course/{id}/resources' , 'getResources');
-    Route::post('course/{id}/add-resources' , 'addResources')->name('add-resource');
+    Route::post('resource' , 'addResources');
     Route::delete('course/resource/{id}' , 'deleteResource');
     // update
     Route::get('course/resource/{id}' , 'getResourceByid');
     // get course resources
     Route::get('course/{id}/resources' , 'getCourseResourcesById');
+    //downloadFile route
+    Route::get('resource/download/{id}' , 'downloadFile');
+    //getAllResources
+    Route::get('resources' , 'getAllResources');
+
 });
 
 

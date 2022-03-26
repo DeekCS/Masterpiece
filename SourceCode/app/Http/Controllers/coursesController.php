@@ -95,4 +95,7 @@ class coursesController extends Controller
 
         return redirect()->back();
     }
+
+
+
 }

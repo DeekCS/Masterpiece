@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$/CoolAdmin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/coreui-free-react-admin-template" vcs="Git" />
   </component>
 </project>

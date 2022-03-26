@@ -1835,7 +1835,8 @@ var FullCalendar = (function (exports) {
             return currentRes;
         };
     }
-    function memoizeArraylike(workerFunc, resEquality, teardownFunc) { // used at all?
+    function memoizeArraylike(workerFunc, resEquality, teardownFunc) {
+        // used at all?
         var _this = this;
         var currentArgSets = [];
         var currentResults = [];
@@ -1867,7 +1868,8 @@ var FullCalendar = (function (exports) {
             return currentResults;
         };
     }
-    function memoizeHashlike(workerFunc, resEquality, teardownFunc) { // used?
+    function memoizeHashlike(workerFunc, resEquality, teardownFunc) {
+        // used?
         var _this = this;
         var currentArgHash = {};
         var currentResHash = {};

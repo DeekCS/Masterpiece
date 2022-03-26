@@ -1,0 +1,54 @@
+#wp-main-content {
+    background: #f1f2f6;
+    padding: 100px 0 70px;
+}
+
+#wp-main-content {
+    min-height: 50px;
+}
+
+.clearfix:before, .clearfix:after {
+    display: block;
+    clear: both;
+    content: "";
+}
+
+.custom-breadcrumb{
+    background-image: url(https://gaviaspreview.com/wp/zilom/wp-content/uploads/2020/12/breadcrumb.jpg);
+}
+
+.breadcrumb-overlay{
+ background-color: rgba(31, 34, 48, 0.1) !important;
+}
+
+.custom-breadcrumb {
+    display: none;
+}
+
+.custom-breadcrumb {
+    position: relative;
+    background-color: #1c1e27;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 35px;
+    z-index: 1;
+}
+
+
+.container-layout-content.container {
+    margin-bottom: 30px;
+}
+
+.nsl-button{
+
+    background-color:#4285f4;
+}
+
+.btn-hover-effect:hover{
+    background-color: #4285f4;
+    left: 37px; top: 28px;
+}
+
+.breadcrumb-container-inner{
+    padding-top:135px;padding-bottom:135px
+}

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import HeaderMob from "../../components/HeaderMob/HeaderMob";
-import Header from "../../components/Header/Header";
+import HeaderMob from "../../components/Dashboard/HeaderMob/HeaderMob";
+import Header from "../../components/Dashboard/Header/Header";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import FileInput from "../../components/FileInput";
+import login from "../Login/Login";
 
 const CreateCourse = () => {
     const [name, setName] = useState("");
@@ -13,7 +14,7 @@ const CreateCourse = () => {
     const [error, setError] = useState("");
     const [image, setImage] = useState("");
     const [requirements, setRequirements] = useState("");
-    const [category_id, setCategoryId  ] = useState("");
+    const [category_id, setCategoryId] = useState("");
     const [categories, setCategories] = useState([]);
     const [year, setYear] = useState("");
     const navigate = useNavigate();
@@ -30,14 +31,11 @@ const CreateCourse = () => {
             setName(value);
         } else if (name === "description") {
             setDescription(value);
-        }
-        else if (name === "requirements") {
+        } else if (name === "requirements") {
             setRequirements(value);
-        }
-        else if (name === "category_id") {
+        } else if (name === "category_id") {
             setCategoryId(value);
-        }
-        else if (name === "year") {
+        } else if (name === "year") {
             setYear(value);
         }
     };
@@ -55,19 +53,23 @@ const CreateCourse = () => {
                 "http://127.0.0.1:8000/api/category/"
             );
             //push the categories to the state
-            setCategories(categories.data.categories);
+            setCategories(categories.data);
         };
         fetchCategories().then((r) => console.log("Test Categories"));
     }, []);
 
+    console.log(category_id + "this is category id");
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         const formData = new FormData();
         formData.append("name", name);
         formData.append("description", description);
-        formData.append("img", image);
-
+        formData.append("image", image);
+        formData.append("category_id", category_id);
+        formData.append("year", year);
+        formData.append("requirements", requirements);
+        // console.log(category_id + "this is category id");
         try {
             const res = await axios.post(
                 "http://127.0.0.1:8000/api/course/",
@@ -78,18 +80,26 @@ const CreateCourse = () => {
                     },
                 }
             );
-            if (res.data.message === "Course added successfully") {
-                await Swal.fire({
-                    icon: "success",
-                    title: "Course Created",
-                    showConfirmButton: false,
-                    timer: 1500,
-                });
-                navigate("/categories");
-                // window.location.reload();
-            }
+            setLoading(false);
+            Swal.fire({
+                title: "Success",
+                text: "Course created successfully",
+                icon: "success",
+                confirmButtonText: "OK",
+            }).then((result) => {
+                if (result.value) {
+                    navigate("/categories");
+                }
+            });
         } catch (err) {
+            setLoading(false);
             setError(err.response.data.error);
+            await Swal.fire({
+                title: "Error",
+                text: err.response.data.error,
+                icon: "error",
+                confirmButtonText: "OK",
+            });
         }
         setLoading(false);
     };
@@ -139,7 +149,9 @@ const CreateCourse = () => {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="year">Year</label>
+                                                <label htmlFor="year">
+                                                    Year
+                                                </label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
@@ -150,23 +162,55 @@ const CreateCourse = () => {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="category_id">Category ID</label>
-                                                <select
-                                                    className="form-control"
-                                                    id="category_id"
-                                                    name="category_id"
-                                                    onChange={handleChange}
-                                                    value={category_id}
-                                                >
-                                                    <option value="">Select Category</option>
-                                                    {categories.map(category => (
-                                                        <option key={category.id}
-                                                            value={category.id}>{category.name}</option>
-                                                    ))}
-                                                </select>
+                                                <label htmlFor="category_id">
+                                                    Category ID
+                                                </label>
+                                                {loading ? (
+                                                    <select
+                                                        className="form-control"
+                                                        name="category_id"
+                                                        id="category_id"
+                                                        value={category_id}
+                                                        onChange={handleChange}
+                                                    >
+                                                        <option value="">
+                                                            Loading...
+                                                        </option>
+                                                    </select>
+                                                ) : (
+                                                    <select
+                                                        className="form-control"
+                                                        name="category_id"
+                                                        id="category_id"
+                                                        value={category_id}
+                                                        onChange={handleChange}
+                                                    >
+                                                        <option value="">
+                                                            Select Category
+                                                        </option>
+                                                        {categories.map(
+                                                            (category) => (
+                                                                <option
+                                                                    key={
+                                                                        category.id
+                                                                    }
+                                                                    value={
+                                                                        category.id
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        category.name
+                                                                    }
+                                                                </option>
+                                                            )
+                                                        )}
+                                                    </select>
+                                                )}
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="requirement">Requirement</label>
+                                                <label htmlFor="requirement">
+                                                    Requirement
+                                                </label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
@@ -176,22 +220,22 @@ const CreateCourse = () => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                            {/*<div className="form-group">*/}
-                                            {/*    <label htmlFor="img">*/}
-                                            {/*        Image*/}
-                                            {/*    </label>*/}
-                                            {/*    <input*/}
-                                            {/*        type="file"*/}
-                                            {/*        className="form-control"*/}
-                                            {/*        id="image"*/}
-                                            {/*        name="img"*/}
-                                            {/*        onChange={(e) => {*/}
-                                            {/*            handleImage(*/}
-                                            {/*                e.target.files*/}
-                                            {/*            );*/}
-                                            {/*        }}*/}
-                                            {/*    />*/}
-                                            {/*</div>*/}
+                                            <div className="form-group">
+                                                <label htmlFor="img">
+                                                    Image
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control"
+                                                    id="image"
+                                                    name="image"
+                                                    onChange={(e) => {
+                                                        handleImage(
+                                                            e.target.files
+                                                        );
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                         <div className="card-footer">
                                             <button

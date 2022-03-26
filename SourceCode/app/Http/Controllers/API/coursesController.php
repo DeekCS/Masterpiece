@@ -22,7 +22,7 @@ class coursesController extends Controller
     public function addCourse(Request $request): JsonResponse
     {
         $course = new Courses();
-        try{
+        try {
             //validate the request
             $this->validate($request, [
                 'name' => 'required',
@@ -30,8 +30,7 @@ class coursesController extends Controller
                 'image' => 'required',
                 'category_id' => 'required',
             ]);
-        }
-        catch (Exception $e){
+        } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
         try {
@@ -44,46 +43,51 @@ class coursesController extends Controller
 
     }
 
-
-    //create a function to get all courses
     public function getAllCourses(): JsonResponse
     {
-        // if there is no courses in the database return an error
-        if (Courses::count() === 0) {
-            return response()->json(['error' => self::NO_COURSE_FOUND], 404);
+        try {
+            $courses = Courses::query()->orderByDesc('id')->get();
+            return response()->json($courses, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 500);
         }
-        //get all courses
-        $courses = Courses::all();
-        //return the courses
-        return response()->json(['success' => $courses], 200);
+    }
+
+    //create a paginated list of courses
+    public function getPaginatedCourses(Request $request): JsonResponse
+    {
+        try {
+            $courses = Courses::query()->orderByDesc('id')->paginate(3);
+            return response()->json($courses);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     //create a function to get a single course
     public function getCourseById($id)
     {
         try {
-            if(Courses::where('id', $id)->exists()){
+            if (Courses::where('id', $id)->exists()) {
                 $course = Courses::find($id);
-        }
-        else{
-            return response()->json(['error' => self::NO_COURSE_FOUND], 404);
-        }
+            } else {
+                return response()->json(['error' => self::NO_COURSE_FOUND], 404);
+            }
 
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-        return response()->json(['success' => $course], 200);
+        return response()->json([$course], 200);
     }
 
     //create a function to update a course
     public function updateCourse(Request $request, $id)
     {
         try {
-            if(Courses::where('id', $id)->exists()){
+            if (Courses::where('id', $id)->exists()) {
                 $course = Courses::find($id);
                 $this->extracted($request, $course);
-            }
-            else{
+            } else {
                 return response()->json(['error' => self::NO_COURSE_FOUND], 404);
             }
         } catch (Exception $e) {
@@ -93,14 +97,13 @@ class coursesController extends Controller
     }
 
     //create a function to delete a course
-    public function deleteCourse($id)
+    public function deleteCourse($id): JsonResponse
     {
         try {
-            if(Courses::where('id', $id)->exists()){
+            if (Courses::where('id', $id)->exists()) {
                 $course = Courses::find($id);
                 $course->delete();
-            }
-            else{
+            } else {
                 return response()->json(['error' => self::NO_COURSE_FOUND], 404);
             }
         } catch (Exception $e) {
@@ -110,23 +113,24 @@ class coursesController extends Controller
     }
 
 
-    public function getCoursesNames(){
-        try{
-            $coursesNames =Courses::all('name');
-            if(count($coursesNames) > 0 ){
-                return response()->json(['200' => 'OK', 'coursesNames'=>$coursesNames]);
-            }else{
+    public function getCoursesNames(): JsonResponse
+    {
+        try {
+            $coursesNames = Courses::all('name');
+            if (count($coursesNames) > 0) {
+                return response()->json(['200' => 'OK', 'coursesNames' => $coursesNames]);
+            } else {
                 return response()->json(['404' => 'No courses was found']);
             }
 
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
     /**
-     * @param  Request  $request
-     * @param  Courses  $course
+     * @param Request $request
+     * @param Courses $course
      *
      * @return void
      */
@@ -137,10 +141,62 @@ class coursesController extends Controller
         $course->year = $request->input('year');
         $course->requirements = $request->input('requirements');
         $course->category_id = $request->input('category_id');
+        $course->image = $request->input('image');
+        //handle image
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = $image->getClientOriginalName();
+            $image->move('uploads/', $imageName);
+            $course->image = $imageName;
+        }
+
         $course->save();
     }
 
+    //getCoursesByCategoryId
 
+    public function getCoursesByCategoryId($id)
+    {
+        try {
+            $courses = Courses::where('category_id', $id)->get();
+            if (count($courses) > 0) {
+//                return response()->json($courses, 200);
+                return response()->json( $courses, 200);
+            }
+            return response()->json(['404' => 'No courses was found']);
+
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    //get all resources of a course by id
+
+
+//    getImage as link url for react js
+
+//get courses by category id , for frontend api
+//    public function getCoursesByCategoryId($id){
+//        $courses = Courses::where('category_id', $id)->get();
+//        return response()->json($courses);
+//    }
+
+
+    //search course by name api for frontend
+    function searchCoursesByName($name)
+    {
+        $result = Courses::where('name', 'LIKE', '%' . $name . '%')->get();
+        if (count($result)) {
+            return Response()->json($result);
+        }
+
+
+        return response()->json(['Result' => 'No Data not found'], 404);
+    }
+
+
+   //handle filter sorting by name , year , asc , desc
 
 
 }
