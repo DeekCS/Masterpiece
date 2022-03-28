@@ -434,26 +434,6 @@ const CategoryCourses = () => {
               </div>
             </form>
 
-            <form className="course-filter-form select-filter-dropdow search-cols-4 mb-5">
-              <div className="course-filter_search">
-                <div className="content-inner">
-                  <label className="title-field">Sorting</label>
-                  <select id="product-filter" value={value} onChange={handleChange}>
-                    <option style={{ background: 'white', color: 'black' }} value="Sort">
-                      Sort
-                    </option>
-                    <option style={{ background: 'white', color: 'black' }} value="Low price">
-                      Low price
-                    </option>
-                    <option style={{ background: 'white', color: 'black' }} value="High price">
-                      High price
-                    </option>
-                  </select>
-                  <i className="tutor-icon-arrow-down-1" />
-                </div>
-              </div>
-            </form>
-
             <div className="row filter-layout masonary-layout">
               {loading && <Preloader />}
               {posts.length === 0 && (

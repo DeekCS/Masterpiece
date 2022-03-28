@@ -22,19 +22,8 @@ class categoriesController extends Controller
             ]);
 
             $category = new Categories();
-            // $img = request()->file('img')->hashName(); // name
+           //validate to make the name is only one and unique
 
-            // $newImageName = time(). '-'. 'category'. '.' . $request->img->extension();
-            // $request->img->move(public_path('images'), $newImageName);
-            // $request->file('img')->store('categoriesImages',$img);
-
-//            if($request->hasFile('img')){
-//                $image =$request->file('img');
-//                $extension =  $image->getClientOriginalExtension();
-//                $imageName = time().'.'. $extension;
-//                $image->move('uploads/categories/'.$imageName);
-//                $category->img ='uploads/categories/'.$imageName ;
-//            }
             if ($request->hasFile('img')) {
                 $image = $request->file('img');
                 $imageName = $image->getClientOriginalName();
@@ -42,6 +31,10 @@ class categoriesController extends Controller
                 $category->img = $imageName;
             }
             $category->name = $request->input('name');
+            //name is unique
+            if (Categories::where('name', $category->name)->exists()) {
+                return response()->json(['error' => 'name is already exist'], 401);
+            }
             $category->description = $request->input('description');
             $category->save();
             return response()->json(['message'=>'Category added successfully'], 200);

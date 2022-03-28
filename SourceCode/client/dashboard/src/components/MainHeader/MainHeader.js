@@ -16,9 +16,9 @@ const MainHeader = () => {
             <div className="main-header--one__top-inner clearfix ">
               <div className="main-header--one__top-left">
                 <div className="main-header--one__top-logo">
-                  <Link to="/home">
+                  <a href="/home">
                     <img src="../../assets/front-end/images/resources/logo-1.png" alt="" />
-                  </Link>
+                  </a>
                 </div>
               </div>
 
@@ -82,8 +82,8 @@ const MainHeader = () => {
         <div className="main-header-one__bottom clearfix ">
           <div className="container">
             <div className="main-header-one__bottom-inner clearfix">
-              <nav className="main-menu main-menu--1 fixed-top">
-                <div className="main-menu__inner fixed-top">
+              <nav className="main-menu main-menu--1 ">
+                <div className="main-menu__inner ">
                   <a href="#" className="mobile-nav__toggler">
                     <i className="fa fa-bars"></i>
                   </a>
@@ -91,11 +91,20 @@ const MainHeader = () => {
                   <div className="left ">
                     <ul className="main-menu__list">
                       <li className="dropdown ">
-                        <Link to="/home">Home</Link>
+                        <a href="/">Home</a>
                       </li>
                       <li className="dropdown">
                         <Link to="/all-courses/">Courses</Link>
                       </li>
+                      {user ? (
+                        <li className="dropdown">
+                          <Link to="/profile">Profile</Link>
+                        </li>
+                      ) : (
+                        <li className="dropdown">
+                          <Link to="/login">Login</Link>
+                        </li>
+                      )}
                     </ul>
                   </div>
 
@@ -107,7 +116,7 @@ const MainHeader = () => {
                             <li className="main-menu__right-login-register-item">
                               <Link to="/profile">
                                 <i className="fa fa-user"></i>
-                                <span> Welcome, {user.first_name}</span>
+                                <span> Welcome, {user ? user.first_name : ''}</span>
                               </Link>
                             </li>
                           ) : (

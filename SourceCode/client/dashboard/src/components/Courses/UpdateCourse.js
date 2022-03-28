@@ -1,51 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import HeaderMob from '../../components/Dashboard/HeaderMob/HeaderMob';
-import Header from '../../components/Dashboard/Header/Header';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import FileInput from '../../components/FileInput';
-import login from '../Login/Login';
+import axios from 'axios';
+import HeaderMob from '../Dashboard/HeaderMob/HeaderMob';
+import Header from '../Dashboard/Header/Header';
+// import HeaderMob from '../../HeaderMob/HeaderMob';
+// import Header from '../../Header/Header';
 
-const CreateCourse = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [image, setImage] = useState('');
-  const [requirements, setRequirements] = useState('');
-  const [category_id, setCategoryId] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [year, setYear] = useState('');
+const UpdateCourse = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  useEffect(() => {
-    const isLoggedIn = JSON.parse(localStorage.getItem('user'));
-    if (!isLoggedIn || isLoggedIn.is_admin !== 1) {
-      navigate('/login');
-    }
-  }, []);
+  const [course, setCourse] = useState({
+    name: '',
+    description: '',
+    year: '',
+    requirements: '',
+    category_id: '',
+    image: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [category_id, setCategoryId] = useState('');
 
+  const [categories, setCategories] = useState([]);
+  const [image, setImage] = useState('');
   const handleChange = e => {
     const { name, value } = e.target;
-    if (name === 'name') {
-      setName(value);
-    } else if (name === 'description') {
-      setDescription(value);
-    } else if (name === 'requirements') {
-      setRequirements(value);
-    } else if (name === 'category_id') {
-      setCategoryId(value);
-    } else if (name === 'year') {
-      setYear(value);
-    }
+    setCourse({ ...course, [name]: value });
   };
-
-  //handle image upload
   const handleImage = file => {
     setImage(file[0]);
   };
-
-  //handle submit to upload a new course with image and data
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -56,48 +41,73 @@ const CreateCourse = () => {
     fetchCategories().then(r => console.log('Test Categories'));
   }, []);
 
-  console.log(category_id + 'this is category id');
+  useEffect(() => {
+    const getCourse = async () => {
+      try {
+        setLoading(true);
+        const result = await axios.get(`http://127.0.0.1:8000/api/course/${id}`);
+        console.log(result.data + 'data');
+        setCourse(result.data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setError(true);
+      }
+    };
+    getCourse();
+  }, [id]);
+
   const handleSubmit = async e => {
     e.preventDefault();
-    setLoading(true);
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('description', description);
-    formData.append('image', image);
-    formData.append('category_id', category_id);
-    formData.append('year', year);
-    formData.append('requirements', requirements);
-    // console.log(category_id + "this is category id");
+
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/course/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      setLoading(false);
-      Swal.fire({
-        title: 'Success',
-        text: 'Course created successfully',
-        icon: 'success',
-        confirmButtonText: 'OK',
-      }).then(result => {
-        if (result.value) {
-          navigate('/categories');
-        }
-      });
+      setLoading(true);
+      setError(false);
+      await axios
+        .put(`http://127.0.0.1:8000/api/course/${id}`, course)
+        .then(res => {
+          setLoading(false);
+          Swal.fire({
+            title: 'Success',
+            text: 'course updated successfully',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          }).then(result => {
+            if (result.value) {
+              navigate('/courses');
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err + 'error ddddd');
+          setLoading(false);
+          setError(true);
+          Swal.fire({
+            title: 'Error',
+            text: err.response.data.message,
+            icon: 'error',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          });
+          console.log(err + 'error');
+        });
     } catch (err) {
       setLoading(false);
-      setError(err.response.data.error);
+      setError(true);
+      console.log(err.response.data + 'error22');
       await Swal.fire({
         title: 'Error',
-        text: err.response.data.error,
+        text: err.response.data,
         icon: 'error',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
         confirmButtonText: 'OK',
       });
     }
-    setLoading(false);
   };
-
   return (
     <>
       <div className="">
@@ -109,7 +119,7 @@ const CreateCourse = () => {
             <div className="main-content">
               <div className="section__content section__content--p30">
                 <div className="container-fluid">
-                  <form action="" method="" onSubmit={handleSubmit}>
+                  <form action="" method="" encType="multipart/form-data" onSubmit={handleSubmit}>
                     <div className="card-body">
                       <div className="form-group">
                         <label htmlFor="name">Course Name</label>
@@ -118,30 +128,41 @@ const CreateCourse = () => {
                           className="form-control"
                           name="name"
                           id="name"
-                          placeholder="Enter Category name"
+                          placeholder="Enter Course name"
                           onChange={handleChange}
-                          value={name}
+                          value={course.name}
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="description">Description</label>
+                        <label htmlFor="description">Course description</label>
                         <textarea
                           className="form-control"
                           name="description"
                           id="description"
-                          placeholder="Enter Description of the Course"
+                          placeholder="Enter Course description"
                           onChange={handleChange}
-                          value={description}
+                          value={course.description}
                         />
                       </div>
                       <div className="form-group">
                         <label htmlFor="year">Year</label>
                         <input
-                          type="text"
+                          type="year"
                           className="form-control"
                           id="year"
                           name="year"
-                          value={year}
+                          value={course.year}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="requirements">Course requirements</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="requirements"
+                          name="requirements"
+                          value={course.requirements}
                           onChange={handleChange}
                         />
                       </div>
@@ -152,7 +173,7 @@ const CreateCourse = () => {
                             className="form-control"
                             name="category_id"
                             id="category_id"
-                            value={category_id}
+                            value={course.category_id}
                             onChange={handleChange}
                           >
                             <option value="">Loading...</option>
@@ -162,7 +183,7 @@ const CreateCourse = () => {
                             className="form-control"
                             name="category_id"
                             id="category_id"
-                            value={category_id}
+                            value={course.category_id}
                             onChange={handleChange}
                           >
                             <option value="">Select Category</option>
@@ -175,18 +196,7 @@ const CreateCourse = () => {
                         )}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="requirement">Requirement</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="requirement"
-                          name="requirements"
-                          value={requirements}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="img">Image</label>
+                        <label htmlFor="image">Image</label>
                         <input
                           type="file"
                           className="form-control"
@@ -214,4 +224,4 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default UpdateCourse;

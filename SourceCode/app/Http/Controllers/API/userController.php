@@ -48,7 +48,7 @@ class userController extends Controller
     {
         try {
             $users = User::all();
-            return response()->json(['message' => 'Users Fetched Successfully', 'users' => $users], 200);
+            return response()->json(['message' => 'Users Fetched Successfully', 'users' => $users]);
         } catch (Exception $e) {
             return response()->json( $e->getMessage(), 500);
         }
@@ -76,12 +76,12 @@ class userController extends Controller
             //handle the email if trying to update the email and the email is already registered in the database
             if ($request->has('email')) {
                 $this->validate($request, [
-                    'email' => 'required|string|email|max:255|unique:users',
+                    'email' => 'required|regex:/(.+)@(.+)\.(.+)/i',
                 ]);
             }
             if ($user) {
                 $this->extracted($request, $user);
-                return response()->json(['message' => 'User Updated Successfully', 'user' => $user], 200);
+                return response()->json([$user], 200);
             }
             return response()->json(['404' => 'No user was found']);
         } catch (Exception $e) {

@@ -21,6 +21,8 @@ import CreateResource from './pages/Resources/CreateResource';
 import RegisterHome from './components/Register/Register';
 import CategoryCourses from './pages/Courses/CategoryCourses';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import Profile from './pages/Front/Profile/Profile';
+import UpdateCourse from './components/Courses/UpdateCourse';
 
 function App() {
   // const navigate = useNavigate();
@@ -40,16 +42,18 @@ function App() {
           <Route path="/categories" element={<Categories />} />
           <Route path="/courses/create" element={<CreateCourse />} />
           <Route path="/courses/" element={<Courses />} />
+          <Route path="/courses/:id" element={<UpdateCourse />} />
           {/*<Route path="/login" element={<Login />} />*/}
           <Route path="/login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/course/:id" element={<CategoryDetail />} />
           <Route path="/all-courses/:id" element={<CategoryCourses />} />
           <Route path="/all-courses/" element={<AllCourses />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="resources/create-resource" element={<CreateResource />} />
           <Route path="/reg" element={<RegisterHome />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       }
     </BrowserRouter>

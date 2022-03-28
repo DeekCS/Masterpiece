@@ -16,9 +16,9 @@
 
 .course-filter-form.search-cols-4>div {
     -webkit-box-flex: 0;
-    -ms-flex: 0 0 calc( 100%/4);
-    flex: 0 0 calc( 100%/4);
-    max-width: calc( 100%/4);
+    -ms-flex: 0 0 calc( 100%/1);
+    flex: 0 0 calc( 100%/1);
+    max-width: calc( 100%/1);
 }
 
 .course-filter-form>div {

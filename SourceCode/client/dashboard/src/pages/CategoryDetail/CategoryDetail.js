@@ -10,7 +10,7 @@ import SimpleAccordion from '../../components/Accordion';
 const CategoryDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [courses, setCourses] = useState({});
+  const [courses, setCourses] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [isOpen, setOpen] = useState(false);
@@ -21,7 +21,7 @@ const CategoryDetail = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await axios(`http://127.0.0.1:8000/api/course/${id}`);
+        const result = await axios.get(`http://127.0.0.1:8000/api/course/${id}`);
         setCourses(result.data);
 
         setLoading(false);
@@ -39,7 +39,7 @@ const CategoryDetail = () => {
   useEffect(async () => {
     try {
       setLoading(true);
-      const result = await axios(`http://127.0.0.1:8000/api/course/5/resources`);
+      const result = await axios(`http://127.0.0.1:8000/api/course/${id}/resources`);
       setResources(result.data);
       result.data.map(resource => {
         resources.push(resource);

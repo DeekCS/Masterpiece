@@ -30,6 +30,12 @@ class coursesController extends Controller
                 'image' => 'required',
                 'category_id' => 'required',
             ]);
+
+            $course->name = $request->input('name');
+            if (Courses::where('name', $course->name)->exists()) {
+                return response()->json(['error' => 'name is already exist'], 401);
+            }
+
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
@@ -77,7 +83,7 @@ class coursesController extends Controller
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-        return response()->json([$course], 200);
+        return response()->json([$course]);
     }
 
     //create a function to update a course
@@ -137,6 +143,8 @@ class coursesController extends Controller
     public function extracted(Request $request, Courses $course): void
     {
         $course->name = $request->input('name');
+
+
         $course->description = $request->input('description');
         $course->year = $request->input('year');
         $course->requirements = $request->input('requirements');
@@ -160,7 +168,6 @@ class coursesController extends Controller
         try {
             $courses = Courses::where('category_id', $id)->get();
             if (count($courses) > 0) {
-//                return response()->json($courses, 200);
                 return response()->json( $courses, 200);
             }
             return response()->json(['404' => 'No courses was found']);
@@ -171,19 +178,7 @@ class coursesController extends Controller
     }
 
 
-    //get all resources of a course by id
 
-
-//    getImage as link url for react js
-
-//get courses by category id , for frontend api
-//    public function getCoursesByCategoryId($id){
-//        $courses = Courses::where('category_id', $id)->get();
-//        return response()->json($courses);
-//    }
-
-
-    //search course by name api for frontend
     function searchCoursesByName($name)
     {
         $result = Courses::where('name', 'LIKE', '%' . $name . '%')->get();
@@ -195,8 +190,6 @@ class coursesController extends Controller
         return response()->json(['Result' => 'No Data not found'], 404);
     }
 
-
-   //handle filter sorting by name , year , asc , desc
 
 
 }
